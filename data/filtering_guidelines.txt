@@ -1,0 +1,8 @@
+An event is important if it meets any of the below criteria:
+
+1. Interaction between vessels of different flags
+2. Interaction between vessels of different types
+3. Occurs within restricted zones (inside EEZs or near port boundaries)
+4. Occurs within 48 hours of OSINT indicators (news/narrative mentions of unusual maritime activity)
+5. Is a trajectory deviation
+6. Occurs under favorable weather conditions

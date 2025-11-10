@@ -1,0 +1,331 @@
+@prefix : <http://example.org/maritime#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+##########
+# Vessel Types (taxonomy)
+##########
+:SmallTrawler a :VesselType ;
+  :typeName "Small Trawler" ;
+  :typeCode "FISH_TRW_S" .
+:ReeferCarrier a :VesselType ;
+  :typeName "Reefer Carrier (Fish)" ;
+  :typeCode "CARR_REEF" .
+:BunkerTanker a :VesselType ;
+  :typeName "Bunker Tanker" ;
+  :typeCode "TANK_BUNK" .
+:CoastGuard a :VesselType ;
+  :typeName "Coast Guard Cutter" ;
+  :typeCode "LE_CG" .
+:Longliner a :VesselType ;
+  :typeName "Longliner" ;
+  :typeCode "FISH_LONG" .
+
+##########
+# Vessel Identities
+##########
+:Vessel_A a :VesselIdentity ;
+  :mmsi "440123450" ;
+  :imo "9820102" ;
+  :vesselName "SEAFARER I" ;
+  :callsign "DUWA8" ;
+  :flag "PH" ;
+  :vesselType :SmallTrawler .
+
+:Vessel_B a :VesselIdentity ;
+  :mmsi "441118888" ;
+  :imo "9322290" ;
+  :vesselName "COAST GUARD 22" ;
+  :callsign "CGPH22" ;
+  :flag "PH" ;
+  :vesselType :CoastGuard .
+
+:Vessel_C a :VesselIdentity ;
+  :mmsi "441223344" ;
+  :vesselName "OCEAN MOTHER" ;
+  :flag "PAN" ;
+  :vesselType :ReeferCarrier .
+
+:Vessel_D a :VesselIdentity ;
+  :mmsi "441556677" ;
+  :vesselName "SEA FUEL" ;
+  :flag "MHL" ;
+  :vesselType :BunkerTanker .
+
+:Vessel_E a :VesselIdentity ;
+  :mmsi "432221111" ;
+  :vesselName "KAITO MARU" ;
+  :flag "JPN" ;
+  :vesselType :Longliner .
+
+##########
+# Zones (EEZs, RFMOs, High Seas)
+##########
+:EEZ_Philippines a :Zone ;
+  :zoneCode "EEZ:Philippines" ;
+  :zoneLabel "Exclusive Economic Zone – Philippines" ;
+  :zoneGeometry :geom_eez_ph .
+:EEZ_Vietnam a :Zone ;
+  :zoneCode "EEZ:Vietnam" ;
+  :zoneLabel "Exclusive Economic Zone – Vietnam" ;
+  :zoneGeometry :geom_eez_vnm .
+:WCPFC a :Zone ;
+  :zoneCode "WCPFC" ;
+  :zoneLabel "Western & Central Pacific Fisheries Commission (RFMO)" ;
+  :zoneGeometry :geom_wcpfc .
+:CCAMLR a :Zone ;
+  :zoneCode "CCAMLR" ;
+  :zoneLabel "Commission for the Conservation of Antarctic Marine Living Resources (RFMO)" ;
+  :zoneGeometry :geom_ccamlr .
+:HighSeas_Pacific a :Zone ;
+  :zoneCode "HighSeas:Pacific" ;
+  :zoneLabel "High Seas – Pacific Sector" ;
+  :zoneGeometry :geom_hs_pac .
+
+##########
+# Geometries (examples)
+##########
+:geom_eez_ph
+  a :Geometry, geo:Geometry ;
+  :asWKT "POLYGON((120.0 14.0,122.0 14.0,122.0 16.0,120.0 16.0,120.0 14.0))" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON((120.0 14.0,122.0 14.0,122.0 16.0,120.0 16.0,120.0 14.0))"^^geo:wktLiteral ;
+  :crs "EPSG:4326" ;
+  :centroidLat "15.0"^^xsd:decimal ;
+  :centroidLon "121.0"^^xsd:decimal .
+
+:geom_eez_vnm
+  a :Geometry, geo:Geometry ;
+  :asWKT "POLYGON((108.0 11.0,110.5 11.0,110.5 14.5,108.0 14.5,108.0 11.0))" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON((108.0 11.0,110.5 11.0,110.5 14.5,108.0 14.5,108.0 11.0))"^^geo:wktLiteral ;
+  :crs "EPSG:4326" ;
+  :centroidLat "12.75"^^xsd:decimal ;
+  :centroidLon "109.25"^^xsd:decimal .
+
+:geom_wcpfc
+  a :Geometry, geo:Geometry ;
+  :asWKT "POLYGON((150.0 0.0,170.0 0.0,170.0 20.0,150.0 20.0,150.0 0.0))" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON((150.0 0.0,170.0 0.0,170.0 20.0,150.0 20.0,150.0 0.0))"^^geo:wktLiteral ;
+  :crs "EPSG:4326" ;
+  :centroidLat "10.0"^^xsd:decimal ;
+  :centroidLon "160.0"^^xsd:decimal .
+
+:geom_ccamlr
+  a :Geometry, geo:Geometry ;
+  :asWKT "POLYGON((-70.0 -60.0, 20.0 -60.0, 20.0 -40.0, -70.0 -40.0, -70.0 -60.0))" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON((-70.0 -60.0, 20.0 -60.0, 20.0 -40.0, -70.0 -40.0, -70.0 -60.0))"^^geo:wktLiteral ;
+  :crs "EPSG:4326" ;
+  :centroidLat "-50.0"^^xsd:decimal ;
+  :centroidLon "-25.0"^^xsd:decimal .
+
+:geom_hs_pac
+  a :Geometry, geo:Geometry ;
+  :asWKT "POLYGON((175.0 5.0, 180.0 5.0, 180.0 15.0, 175.0 15.0, 175.0 5.0))" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON((175.0 5.0, 180.0 5.0, 180.0 15.0, 175.0 15.0, 175.0 5.0))"^^geo:wktLiteral ;
+  :crs "EPSG:4326" ;
+  :centroidLat "10.0"^^xsd:decimal ;
+  :centroidLon "177.5"^^xsd:decimal .
+
+# Reference track geometry (LineString)
+:geom_track_ref01
+  a :Geometry, geo:Geometry ;
+  :asWKT "LINESTRING(160.0 12.0,160.4 12.4,160.9 12.8,161.3 13.0)" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> LINESTRING(160.0 12.0,160.4 12.4,160.9 12.8,161.3 13.0)"^^geo:wktLiteral ;
+  :crs "EPSG:4326" .
+
+# Cebu berth point
+:geom_port_cebu
+  a :Geometry, geo:Geometry ;
+  :asWKT "POINT(123.90 10.31)" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POINT(123.90 10.31)"^^geo:wktLiteral ;
+  :crs "EPSG:4326" .
+
+# Weather window polygon
+:geom_wx_01
+  a :Geometry, geo:Geometry ;
+  :asWKT "POLYGON((159.5 11.5,161.5 11.5,161.5 13.5,159.5 13.5,159.5 11.5))" ;
+  geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON((159.5 11.5,161.5 11.5,161.5 13.5,159.5 13.5,159.5 11.5))"^^geo:wktLiteral ;
+  :crs "EPSG:4326" .
+
+##########
+# Provenance Sources (AIS feed, Weather, OSINT)
+##########
+:SRC_AIS a :ProvenanceSource ; :sourceId "SRC_AIS" ; :sourceName "AIS_GlobalFeed" ; :sourceType "SensorNetwork" .
+:SRC_WX  a :ProvenanceSource ; :sourceId "SRC_WX"  ; :sourceName "NOAA_Weather_API" ; :sourceType "WeatherFeed" .
+:SRC_OSINT_PH a :ProvenanceSource ; :sourceId "SRC_OSINT_PH" ; :sourceName "NewsWire_AP_2025-10-04" ; :sourceType "OSINT" ; :sourceUrl "https://example.org/ap/2025-10-04-philippines-maritime" .
+:SRC_OSINT_CCAMLR a :ProvenanceSource ; :sourceId "SRC_OSINT_CCAMLR" ; :sourceName "MaritimeWatch_2025-09-18" ; :sourceType "OSINT" .
+
+##########
+# Pattern Types / Movement Patterns (reference routes to compare deviations)
+##########
+:pattern_route_cluster a :PatternType ; :code "RTC" ; :name "RouteCluster" .
+:TrackPattern_Ref01 a :MovementPattern ; :hasGeometry :geom_track_ref01 ; :patternType :pattern_route_cluster .
+
+##########
+# GROUPS (kept so events like gaps can still reference participants if needed)
+##########
+:group_gap_A a :Group ; :groupType "GapActor" .
+:group_gap_B a :Group ; :groupType "GapActor" .
+:group_gap_C a :Group ; :groupType "GapActor" .
+
+:gm_gap_A a :GroupMembership ; :memberVessel :Vessel_A ; :membershipRole "solo" ; :memberOf :group_gap_A .
+:gm_gap_B a :GroupMembership ; :memberVessel :Vessel_B ; :membershipRole "solo" ; :memberOf :group_gap_B .
+:gm_gap_C a :GroupMembership ; :memberVessel :Vessel_C ; :membershipRole "solo" ; :memberOf :group_gap_C .
+
+##########
+# AIS Observations — MULTI-VESSEL TRACKS
+# Times between 2025-10-04 and 2025-10-08 (UTC). Units: lat/lon degrees, speed kn, course deg.
+##########
+
+# --- Vessel A: coastal to WCPFC; kink near 160E (~deviation candidate); rendezvous vicinity with C on 10-05 ~14:20Z
+:ais_A_001 a :AISObservation ; :obsId "ais_A_001" ; :mmsi "440123450" ; :lat "14.20"^^xsd:decimal ; :lon "121.20"^^xsd:decimal ; :speed "9.2"^^xsd:decimal ; :course "195"^^xsd:decimal ; :distanceFromPort_km "40.0"^^xsd:decimal ; :distanceFromShore_km "15.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-04T23:30:00Z"^^xsd:dateTime .
+:ais_A_002 a :AISObservation ; :obsId "ais_A_002" ; :mmsi "440123450" ; :lat "14.45"^^xsd:decimal ; :lon "121.80"^^xsd:decimal ; :speed "8.7"^^xsd:decimal ; :course "200"^^xsd:decimal ; :distanceFromPort_km "90.0"^^xsd:decimal ; :distanceFromShore_km "40.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T06:00:00Z"^^xsd:dateTime .
+:ais_A_003 a :AISObservation ; :obsId "ais_A_003" ; :mmsi "440123450" ; :lat "11.90"^^xsd:decimal ; :lon "159.80"^^xsd:decimal ; :speed "9.1"^^xsd:decimal ; :course "080"^^xsd:decimal ; :distanceFromPort_km "700.0"^^xsd:decimal ; :distanceFromShore_km "300.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T13:45:00Z"^^xsd:dateTime .
+:ais_A_004 a :AISObservation ; :obsId "ais_A_004" ; :mmsi "440123450" ; :lat "12.10"^^xsd:decimal ; :lon "160.10"^^xsd:decimal ; :speed "7.5"^^xsd:decimal ; :course "020"^^xsd:decimal ; :distanceFromPort_km "710.0"^^xsd:decimal ; :distanceFromShore_km "310.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T14:10:00Z"^^xsd:dateTime .
+:ais_A_005 a :AISObservation ; :obsId "ais_A_005" ; :mmsi "440123450" ; :lat "12.25"^^xsd:decimal ; :lon "160.15"^^xsd:decimal ; :speed "2.0"^^xsd:decimal ; :course "350"^^xsd:decimal ; :distanceFromPort_km "712.0"^^xsd:decimal ; :distanceFromShore_km "312.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T14:20:00Z"^^xsd:dateTime .
+:ais_A_006 a :AISObservation ; :obsId "ais_A_006" ; :mmsi "440123450" ; :lat "12.35"^^xsd:decimal ; :lon "160.20"^^xsd:decimal ; :speed "2.1"^^xsd:decimal ; :course "355"^^xsd:decimal ; :distanceFromPort_km "714.0"^^xsd:decimal ; :distanceFromShore_km "314.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T14:30:00Z"^^xsd:dateTime .
+:ais_A_007 a :AISObservation ; :obsId "ais_A_007" ; :mmsi "440123450" ; :lat "12.80"^^xsd:decimal ; :lon "160.60"^^xsd:decimal ; :speed "8.0"^^xsd:decimal ; :course "045"^^xsd:decimal ; :distanceFromPort_km "760.0"^^xsd:decimal ; :distanceFromShore_km "340.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-07T05:10:00Z"^^xsd:dateTime .
+:ais_A_008 a :AISObservation ; :obsId "ais_A_008" ; :mmsi "440123450" ; :lat "13.10"^^xsd:decimal ; :lon "161.20"^^xsd:decimal ; :speed "8.2"^^xsd:decimal ; :course "060"^^xsd:decimal ; :distanceFromPort_km "820.0"^^xsd:decimal ; :distanceFromShore_km "360.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-07T05:30:00Z"^^xsd:dateTime .
+
+# Predicted obs for A around 14:20 (useful for deviation inference)
+:pred_A_001 a :PredictedObservation ; :forVessel :Vessel_A ; :timestamp "2025-10-05T14:20:00Z"^^xsd:dateTime ; :lat "12.00"^^xsd:decimal ; :lon "160.00"^^xsd:decimal ; :sog "8.0"^^xsd:decimal ; :cog "035"^^xsd:decimal ; :modelVersion "v1.2.3" ; :predictionMethod "TransformerTrajectory" ; :predictionTimeGenerated "2025-10-05T14:00:00Z"^^xsd:dateTime .
+
+# --- Vessel C: approaches same vicinity as A around 14:20Z; later goes south (gap + CCAMLR leg)
+:ais_C_001 a :AISObservation ; :obsId "ais_C_001" ; :mmsi "441223344" ; :lat "12.00"^^xsd:decimal ; :lon "160.05"^^xsd:decimal ; :speed "7.0"^^xsd:decimal ; :course "010"^^xsd:decimal ; :distanceFromPort_km "705.0"^^xsd:decimal ; :distanceFromShore_km "305.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T14:18:00Z"^^xsd:dateTime .
+:ais_C_002 a :AISObservation ; :obsId "ais_C_002" ; :mmsi "441223344" ; :lat "12.08"^^xsd:decimal ; :lon "160.09"^^xsd:decimal ; :speed "2.1"^^xsd:decimal ; :course "355"^^xsd:decimal ; :distanceFromPort_km "706.0"^^xsd:decimal ; :distanceFromShore_km "306.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T14:25:00Z"^^xsd:dateTime .
+:ais_C_003 a :AISObservation ; :obsId "ais_C_003" ; :mmsi "441223344" ; :lat "12.20"^^xsd:decimal ; :lon "160.12"^^xsd:decimal ; :speed "7.8"^^xsd:decimal ; :course "040"^^xsd:decimal ; :distanceFromPort_km "710.0"^^xsd:decimal ; :distanceFromShore_km "308.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-05T14:40:00Z"^^xsd:dateTime .
+# Southbound toward higher latitudes (sparse => gap candidate)
+:ais_C_004 a :AISObservation ; :obsId "ais_C_004" ; :mmsi "441223344" ; :lat "-48.20"^^xsd:decimal ; :lon "-30.0"^^xsd:decimal ; :speed "10.5"^^xsd:decimal ; :course "180"^^xsd:decimal ; :distanceFromPort_km "2200.0"^^xsd:decimal ; :distanceFromShore_km "600.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-09-20T06:40:00Z"^^xsd:dateTime .
+:ais_C_005 a :AISObservation ; :obsId "ais_C_005" ; :mmsi "441223344" ; :lat "-48.25"^^xsd:decimal ; :lon "-30.1"^^xsd:decimal ; :speed "2.5"^^xsd:decimal ; :course "010"^^xsd:decimal ; :distanceFromPort_km "2205.0"^^xsd:decimal ; :distanceFromShore_km "605.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-09-20T07:05:00Z"^^xsd:dateTime .
+
+# --- Vessel B: patrol near PH EEZ; short AIS gap on 10-04 ~10:00Z
+:ais_B_001 a :AISObservation ; :obsId "ais_B_001" ; :mmsi "441118888" ; :lat "14.60"^^xsd:decimal ; :lon "121.00"^^xsd:decimal ; :speed "15.0"^^xsd:decimal ; :course "030"^^xsd:decimal ; :distanceFromPort_km "20.0"^^xsd:decimal ; :distanceFromShore_km "8.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-04T09:50:00Z"^^xsd:dateTime .
+:ais_B_002 a :AISObservation ; :obsId "ais_B_002" ; :mmsi "441118888" ; :lat "14.62"^^xsd:decimal ; :lon "121.05"^^xsd:decimal ; :speed "0.0"^^xsd:decimal ; :course "000"^^xsd:decimal ; :distanceFromPort_km "21.0"^^xsd:decimal ; :distanceFromShore_km "8.2"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-04T10:26:00Z"^^xsd:dateTime .
+
+# --- Vessel D: anchorage near port (loitering candidate, but we provide raw obs only)
+:ais_D_001 a :AISObservation ; :obsId "ais_D_001" ; :mmsi "441556677" ; :lat "10.30"^^xsd:decimal ; :lon "123.85"^^xsd:decimal ; :speed "1.5"^^xsd:decimal ; :course "010"^^xsd:decimal ; :distanceFromPort_km "3.0"^^xsd:decimal ; :distanceFromShore_km "0.8"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-06T03:30:00Z"^^xsd:dateTime .
+:ais_D_002 a :AISObservation ; :obsId "ais_D_002" ; :mmsi "441556677" ; :lat "10.31"^^xsd:decimal ; :lon "123.86"^^xsd:decimal ; :speed "1.7"^^xsd:decimal ; :course "020"^^xsd:decimal ; :distanceFromPort_km "2.6"^^xsd:decimal ; :distanceFromShore_km "0.7"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-06T04:30:00Z"^^xsd:dateTime .
+:ais_D_003 a :AISObservation ; :obsId "ais_D_003" ; :mmsi "441556677" ; :lat "10.31"^^xsd:decimal ; :lon "123.86"^^xsd:decimal ; :speed "1.8"^^xsd:decimal ; :course "030"^^xsd:decimal ; :distanceFromPort_km "2.5"^^xsd:decimal ; :distanceFromShore_km "0.7"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-06T05:30:00Z"^^xsd:dateTime .
+
+# --- Vessel E: loiter + fishing sequence in EEZ_Vietnam; slight course change around 18:15Z 10-04
+:ais_E_001 a :AISObservation ; :obsId "ais_E_001" ; :mmsi "432221111" ; :lat "12.20"^^xsd:decimal ; :lon "109.40"^^xsd:decimal ; :speed "3.2"^^xsd:decimal ; :course "250"^^xsd:decimal ; :distanceFromPort_km "55.0"^^xsd:decimal ; :distanceFromShore_km "35.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-04T18:10:00Z"^^xsd:dateTime .
+:ais_E_002 a :AISObservation ; :obsId "ais_E_002" ; :mmsi "432221111" ; :lat "12.19"^^xsd:decimal ; :lon "109.38"^^xsd:decimal ; :speed "3.0"^^xsd:decimal ; :course "258"^^xsd:decimal ; :distanceFromPort_km "55.5"^^xsd:decimal ; :distanceFromShore_km "35.5"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-04T18:20:00Z"^^xsd:dateTime .
+:ais_E_003 a :AISObservation ; :obsId "ais_E_003" ; :mmsi "432221111" ; :lat "12.18"^^xsd:decimal ; :lon "109.35"^^xsd:decimal ; :speed "2.8"^^xsd:decimal ; :course "262"^^xsd:decimal ; :distanceFromPort_km "56.0"^^xsd:decimal ; :distanceFromShore_km "36.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-04T18:30:00Z"^^xsd:dateTime .
+:ais_E_004 a :AISObservation ; :obsId "ais_E_004" ; :mmsi "432221111" ; :lat "12.10"^^xsd:decimal ; :lon "109.10"^^xsd:decimal ; :speed "1.6"^^xsd:decimal ; :course "270"^^xsd:decimal ; :distanceFromPort_km "60.0"^^xsd:decimal ; :distanceFromShore_km "38.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-06T06:30:00Z"^^xsd:dateTime .
+:ais_E_005 a :AISObservation ; :obsId "ais_E_005" ; :mmsi "432221111" ; :lat "12.05"^^xsd:decimal ; :lon "108.95"^^xsd:decimal ; :speed "1.4"^^xsd:decimal ; :course "272"^^xsd:decimal ; :distanceFromPort_km "62.0"^^xsd:decimal ; :distanceFromShore_km "39.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-06T07:30:00Z"^^xsd:dateTime .
+:ais_E_006 a :AISObservation ; :obsId "ais_E_006" ; :mmsi "432221111" ; :lat "12.00"^^xsd:decimal ; :lon "108.80"^^xsd:decimal ; :speed "1.2"^^xsd:decimal ; :course "275"^^xsd:decimal ; :distanceFromPort_km "64.0"^^xsd:decimal ; :distanceFromShore_km "40.0"^^xsd:decimal ; :source "AIS_GlobalFeed" ; :timestamp "2025-10-06T08:30:00Z"^^xsd:dateTime .
+
+##########
+# Trajectory Sequences — each bundles a set of observations to support downstream behavior inference.
+##########
+:traj_A_001 a :TrajectorySequence ;
+  :forVessel :Vessel_A ;
+  :hasFirstObservation :ais_A_001 ;
+  :hasLastObservation  :ais_A_008 ;
+  :observationCount "8"^^xsd:integer ;
+  :usesObservation :ais_A_001, :ais_A_002, :ais_A_003, :ais_A_004, :ais_A_005, :ais_A_006, :ais_A_007, :ais_A_008 ;
+  :usesObservation :pred_A_001 .
+
+:traj_C_001 a :TrajectorySequence ;
+  :forVessel :Vessel_C ;
+  :hasFirstObservation :ais_C_001 ;
+  :hasLastObservation  :ais_C_005 ;
+  :observationCount "5"^^xsd:integer ;
+  :usesObservation :ais_C_001, :ais_C_002, :ais_C_003, :ais_C_004, :ais_C_005 .
+
+:traj_B_001 a :TrajectorySequence ;
+  :forVessel :Vessel_B ;
+  :hasFirstObservation :ais_B_001 ;
+  :hasLastObservation  :ais_B_002 ;
+  :observationCount "2"^^xsd:integer ;
+  :usesObservation :ais_B_001, :ais_B_002 .
+
+:traj_D_001 a :TrajectorySequence ;
+  :forVessel :Vessel_D ;
+  :hasFirstObservation :ais_D_001 ;
+  :hasLastObservation  :ais_D_003 ;
+  :observationCount "3"^^xsd:integer ;
+  :usesObservation :ais_D_001, :ais_D_002, :ais_D_003 .
+
+:traj_E_001 a :TrajectorySequence ;
+  :forVessel :Vessel_E ;
+  :hasFirstObservation :ais_E_001 ;
+  :hasLastObservation  :ais_E_006 ;
+  :observationCount "6"^^xsd:integer ;
+  :usesObservation :ais_E_001, :ais_E_002, :ais_E_003, :ais_E_004, :ais_E_005, :ais_E_006 .
+
+##########
+# Context Events retained (non-BehaviorEvent): AIS gaps, port visits, fishing, weather.
+##########
+
+# AIS Gaps inferred windows (to be cross-checked against traj_C_001 and traj_B_001)
+:gap_C_01 a :Event ;
+  :eventId "gap_C_01" ;
+  :eventType "AISGapEvent" ;
+  :hasProvenance :SRC_AIS ;
+  :location :EEZ_Philippines ;
+  :startTime "2025-10-05T12:00:00Z"^^xsd:dateTime ;
+  :endTime   "2025-10-05T18:00:00Z"^^xsd:dateTime ;
+  :gapDistance_km "33.2"^^xsd:decimal ;
+  :gapDuration_hours "6.0"^^xsd:decimal ;
+  :gapImpliedSpeed_knots "3.0"^^xsd:decimal ;
+  :gapIntentionalDisabling "false"^^xsd:boolean ;
+  :numPositions12HoursBeforeSat "3"^^xsd:integer ;
+  :positionsPerDaySatReception "5.2"^^xsd:decimal ;
+  :participantMembership :gm_gap_C .
+
+:gap_B_01 a :Event ;
+  :eventId "gap_B_01" ;
+  :eventType "AISGapEvent" ;
+  :hasProvenance :SRC_AIS ;
+  :location :EEZ_Philippines ;
+  :startTime "2025-10-04T10:00:00Z"^^xsd:dateTime ;
+  :endTime   "2025-10-04T10:25:00Z"^^xsd:dateTime ;
+  :gapDistance_km "2.1"^^xsd:decimal ;
+  :gapDuration_hours "0.42"^^xsd:decimal ;
+  :gapImpliedSpeed_knots "2.7"^^xsd:decimal ;
+  :gapIntentionalDisabling "false"^^xsd:boolean ;
+  :numPositions12HoursBeforeSat "8"^^xsd:integer ;
+  :positionsPerDaySatReception "12.0"^^xsd:decimal ;
+  :participantMembership :gm_gap_B .
+
+# Port visit consistent with Vessel D loitering near anchorage (raw obs provided above)
+:port_A_01 a :Event ;
+  :eventId "port_A_01" ;
+  :eventType "PortVisitEvent" ;
+  :portName "Cebu North Port" ;
+  :berthGeometry :geom_port_cebu ;
+  :hasProvenance :SRC_AIS ;
+  :location :EEZ_Philippines ;
+  :startTime "2025-10-06T12:30:00Z"^^xsd:dateTime ;
+  :endTime   "2025-10-06T20:00:00Z"^^xsd:dateTime ;
+  :startDistanceFromPort_km "2.0"^^xsd:decimal ; :endDistanceFromPort_km "0.5"^^xsd:decimal ;
+  :startDistanceFromShore_km "2.5"^^xsd:decimal ; :endDistanceFromShore_km "0.3"^^xsd:decimal .
+
+# Fishing window overlaps E track in EEZ_Vietnam
+:fish_E_01 a :Event ;
+  :eventId "fish_E_01" ;
+  :eventType "FishingEvent" ;
+  :hasProvenance :SRC_AIS ;
+  :location :EEZ_Vietnam ;
+  :startTime "2025-10-06T06:30:00Z"^^xsd:dateTime ;
+  :endTime   "2025-10-06T08:30:00Z"^^xsd:dateTime ;
+  :fishingEffortScore "0.62"^^xsd:decimal ;
+  :gearType "Longline" .
+
+# Weather window over WCPFC to support "good weather" inferences for A around 10-07
+:wx_WCPFC_01 a :Event ;
+  :eventId "wx_WCPFC_01" ;
+  :eventType "WeatherEvent" ;
+  :weatherType "Clear" ;
+  :severity "Calm" ;
+  :weatherGeometry :geom_wx_01 ;
+  :hasProvenance :SRC_WX ;
+  :location :WCPFC ;
+  :startTime "2025-10-07T00:00:00Z"^^xsd:dateTime ;
+  :endTime   "2025-10-07T12:00:00Z"^^xsd:dateTime .
+
+##########
+# Movement Pattern (reference) for deviation detection
+##########
+:ref_track_A a :MovementPattern ; :patternType :pattern_route_cluster ; :hasGeometry :geom_track_ref01 .

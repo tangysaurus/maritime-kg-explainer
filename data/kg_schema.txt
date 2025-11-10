@@ -1,0 +1,263 @@
+Knowledge Graph (Top-Level)
+  ├── Classes (key abstract types)
+  │     • Event
+  │     • AIS Observation
+  │     • Predicted Observation
+  │     • Trajectory Sequence
+  │     • Vessel Identity
+  │     • Vessel Type
+  │     • Group
+  │     • Group Membership
+  │     • Zone (marine area taxonomy)
+  │     • Geometry
+  │     • Pattern Type
+  │     • Movement Pattern
+  │     • Provenance Source
+  │     • Temporal Annotation / Temporal Semantic
+  │     • Spatial Semantic
+  └── Notes
+        • Subclasses inherit parent properties unless overridden
+        • DatatypeProperty → xsd:*, ObjectProperty → target class
+
+Event
+  ├── subclassOf: (root)
+  ├── semantics: “Something that happens in time/space, with optional participants and context”
+  ├── core properties (domain = Event)
+  │     • eventId [DatatypeProperty] → xsd:string
+  │     • descriptionText [DatatypeProperty] → xsd:string
+  │     • eventType [DatatypeProperty] → xsd:string         # textual label/code
+  │     • startTime [DatatypeProperty] → xsd:dateTime
+  │     • endTime [DatatypeProperty] → xsd:dateTime
+  │     • startDistanceFromPort_km [DatatypeProperty] → xsd:decimal
+  │     • startDistanceFromShore_km [DatatypeProperty] → xsd:decimal
+  │     • endDistanceFromPort_km [DatatypeProperty] → xsd:decimal
+  │     • endDistanceFromShore_km [DatatypeProperty] → xsd:decimal
+  │     • location [ObjectProperty] → Zone                   # where this event occurs
+  │     • event bbox geometry [ObjectProperty] → Geometry
+  │     • event center point geometry [ObjectProperty] → Geometry
+  │     • has participant (membership node) [ObjectProperty] → Group Membership
+  │     • validatedBy [DatatypeProperty] → xsd:string        # rule ID / method label
+  │     • explainedBy [DatatypeProperty] → xsd:string        # short human explanation
+  │     • hasProvenance [ObjectProperty] → Provenance Source
+
+Behavior Event
+  ├── subclassOf: Event
+  ├── semantics: “Semantic behavior labels confirmed or hypothesized for vessels”
+  ├── shared properties (domain = Behavior Event)
+  │     • behaviorType [DatatypeProperty] → xsd:string       # e.g., Encounter | Loitering | CourseDeviation
+  │     • actor [ObjectProperty] → Vessel Identity
+  │     • uncertaintyNote [DatatypeProperty] → xsd:string    # reasoned uncertainty/exceptions
+
+Encounter Event
+  ├── subclassOf: Behavior Event
+  ├── properties
+  │     • minSeparation_nm [DatatypeProperty] → xsd:decimal
+  │     • coLocationDuration_min [DatatypeProperty] → xsd:decimal
+  │     • sameEEZ [DatatypeProperty] → xsd:boolean
+
+Loitering Event
+  ├── subclassOf: Behavior Event
+  ├── properties
+  │     • avgSpeed_knots [DatatypeProperty] → xsd:decimal
+  │     • patternGeometry [ObjectProperty] → Geometry
+  │     • unexplainedByWeatherOrPort [DatatypeProperty] → xsd:boolean
+
+Course Deviation Event
+  ├── subclassOf: Behavior Event
+  ├── properties
+  │     • referenceTrack [ObjectProperty] → Movement Pattern
+  │     • deviationAngle_degrees [DatatypeProperty] → xsd:decimal
+  │     • deviationDistance_nm [DatatypeProperty] → xsd:decimal
+  │     • unexplainedByWeatherOrPort [DatatypeProperty] → xsd:boolean
+
+AIS Gap Event
+  ├── subclassOf: Event
+  ├── properties
+  │     • AIS off position [ObjectProperty] → Geometry
+  │     • AIS on position [ObjectProperty] → Geometry
+  │     • gapDistance_km [DatatypeProperty] → xsd:decimal
+  │     • gapDuration_hours [DatatypeProperty] → xsd:decimal
+  │     • gapImpliedSpeed_knots [DatatypeProperty] → xsd:decimal
+  │     • gapIntentionalDisabling [DatatypeProperty] → xsd:boolean
+  │     • numPositions12HoursBeforeSat [DatatypeProperty] → xsd:integer
+  │     • positionsPerDaySatReception [DatatypeProperty] → xsd:decimal
+
+Fishing Event
+  ├── subclassOf: Event
+  ├── properties
+  │     • fishingEffortScore [DatatypeProperty] → xsd:decimal
+  │     • gearType [DatatypeProperty] → xsd:string
+
+Port Visit Event
+  ├── subclassOf: Event
+  ├── properties
+  │     • portName [DatatypeProperty] → xsd:string
+  │     • berthGeometry [ObjectProperty] → Geometry
+
+Weather Event
+  ├── subclassOf: Event
+  ├── properties
+  │     • weatherType [DatatypeProperty] → xsd:string
+  │     • severity [DatatypeProperty] → xsd:string
+  │     • weatherGeometry [ObjectProperty] → Geometry
+
+AIS Observation
+  ├── subclassOf: (root observation)
+  ├── semantics: “Raw AIS record”
+  ├── properties (domain = AIS Observation)
+  │     • obsId [DatatypeProperty] → xsd:string
+  │     • mmsi [DatatypeProperty] → xsd:string
+  │     • lat [DatatypeProperty] → xsd:decimal
+  │     • lon [DatatypeProperty] → xsd:decimal
+  │     • speed [DatatypeProperty] → xsd:decimal
+  │     • course [DatatypeProperty] → xsd:decimal
+  │     • distanceFromPort_km [DatatypeProperty] → xsd:decimal
+  │     • distanceFromShore_km [DatatypeProperty] → xsd:decimal
+  │     • is_fishing [DatatypeProperty] → xsd:boolean
+  │     • source [DatatypeProperty] → xsd:string
+  │     • timestamp [DatatypeProperty] → xsd:dateTime
+
+Predicted Observation
+  ├── subclassOf: (root observation)
+  ├── semantics: “Model-predicted position/speed/heading”
+  ├── properties
+  │     • forVessel [ObjectProperty] → Vessel Identity
+  │     • timestamp [DatatypeProperty] → xsd:dateTime
+  │     • lat [DatatypeProperty] → xsd:decimal
+  │     • lon [DatatypeProperty] → xsd:decimal
+  │     • sog [DatatypeProperty] → xsd:decimal
+  │     • cog [DatatypeProperty] → xsd:decimal
+  │     • modelVersion [DatatypeProperty] → xsd:string
+  │     • predictionMethod [DatatypeProperty] → xsd:string
+  │     • predictionTimeGenerated [DatatypeProperty] → xsd:dateTime
+
+Trajectory Sequence
+  ├── subclassOf: (root)
+  ├── semantics: “Ordered sequence of observations”
+  ├── properties
+  │     • forVessel [ObjectProperty] → Vessel Identity
+  │     • hasFirstObservation [ObjectProperty] → AIS Observation
+  │     • hasLastObservation [ObjectProperty] → AIS Observation
+  │     • observationCount [DatatypeProperty] → xsd:integer
+  │     • usesObservation [ObjectProperty] → (AIS Observation | Predicted Observation)
+
+Vessel Identity
+  ├── subclassOf: (root)
+  ├── properties
+  │     • mmsi [DatatypeProperty] → xsd:string
+  │     • imo [DatatypeProperty] → xsd:string
+  │     • vesselName [DatatypeProperty] → xsd:string
+  │     • callsign [DatatypeProperty] → xsd:string
+  │     • flag [DatatypeProperty] → xsd:string
+  │     • vesselType [ObjectProperty] → Vessel Type
+
+Vessel Type
+  ├── subclassOf: (taxonomy root)
+  ├── properties
+  │     • typeCode [DatatypeProperty] → xsd:string
+  │     • typeName [DatatypeProperty] → xsd:string
+  ├── hierarchy
+  │     • Fishing
+  │     │     ├── SmallTrawler
+  │     │     ├── MediumTrawler
+  │     │     ├── PurseSeiner
+  │     │     ├── Longliner
+  │     │     └── SquidJigger
+  │     • Carrier
+  │     │     ├── ReeferCarrier
+  │     │     └── MotherShip
+  │     • Tanker
+  │     │     ├── BunkerTanker
+  │     │     └── FuelSupplyVessel
+  │     • LawEnforcement
+  │     │     ├── CoastGuard
+  │     │     └── NavalPatrol
+  │     • Research
+  │           ├── SurveyVessel
+  │           └── OceanographicShip
+
+Group
+  ├── subclassOf: (root)
+  ├── properties
+  │     • groupType [DatatypeProperty] → xsd:string
+  │     • has member (membership node) [ObjectProperty] → Group Membership
+
+Group Membership
+  ├── subclassOf: (root)
+  ├── properties
+  │     • memberVessel [ObjectProperty] → Vessel Identity
+  │     • membershipRole [DatatypeProperty] → xsd:string      # primary, secondary, etc.
+  │     • memberOf [ObjectProperty] → Group
+
+Zone
+  ├── subclassOf: (marine area root)
+  ├── properties (domain = Zone)
+  │     • zoneCode [DatatypeProperty] → xsd:string
+  │     • zoneLabel [DatatypeProperty] → xsd:string
+  │     • zoneGeometry [ObjectProperty] → Geometry
+  ├── taxonomy (examples inspired by GFW layers)
+  │     • EEZ (Exclusive Economic Zone)
+  │     │     ├── EEZ:Philippines
+  │     │     ├── EEZ:Indonesia
+  │     │     ├── EEZ:Vietnam
+  │     │     ├── EEZ:Japan
+  │     │     ├── EEZ:Chile
+  │     │     ├── EEZ:Argentina
+  │     │     └── EEZ:WestAfrica
+  │     • RFMO (Regional Fisheries Management Organization)
+  │     │     ├── IATTC
+  │     │     ├── ICCAT
+  │     │     ├── WCPFC
+  │     │     ├── IOTC
+  │     │     ├── SPRFMO
+  │     │     ├── NAFO
+  │     │     ├── NPFC
+  │     │     └── CCAMLR
+  │     • FAOArea (optional roll-up)
+  │     • HighSeas (beyond national jurisdiction)
+
+Geometry
+  ├── subclassOf: (root)
+  ├── properties
+  │     • asWKT [DatatypeProperty] → xsd:string
+  │     • centroidLat [DatatypeProperty] → xsd:decimal
+  │     • centroidLon [DatatypeProperty] → xsd:decimal
+  │     • crs [DatatypeProperty] → xsd:string                 # e.g., EPSG:4326
+
+Pattern Type
+  ├── subclassOf: (root)
+  ├── properties
+  │     • code [DatatypeProperty] → xsd:string
+  │     • name [DatatypeProperty] → xsd:string
+
+Movement Pattern
+  ├── subclassOf: (root)
+  ├── properties
+  │     • hasGeometry [ObjectProperty] → Geometry
+  │     • patternType [ObjectProperty] → Pattern Type
+
+Temporal Annotation
+  ├── subclassOf: (root)
+  ├── properties
+  │     • startTime [DatatypeProperty] → xsd:dateTime
+  │     • endTime [DatatypeProperty] → xsd:dateTime
+
+Temporal Semantic
+  ├── subclassOf: (root)
+  ├── properties
+  │     • duration_min [DatatypeProperty] → xsd:decimal
+  │     • timeWindowLabel [DatatypeProperty] → xsd:string
+
+Spatial Semantic
+  ├── subclassOf: (root)
+  ├── properties
+  │     • bboxGeometry [ObjectProperty] → Geometry
+  │     • centerPointGeometry [ObjectProperty] → Geometry
+
+Provenance Source
+  ├── subclassOf: (root)
+  ├── properties
+  │     • sourceId [DatatypeProperty] → xsd:string
+  │     • sourceName [DatatypeProperty] → xsd:string
+  │     • sourceType [DatatypeProperty] → xsd:string          # SensorNetwork, WeatherFeed, Manual, Model, etc.
+  │     • sourceUrl [DatatypeProperty] → xsd:string           # optional
