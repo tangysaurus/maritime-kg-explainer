@@ -1,6 +1,5 @@
 from schema import *
 from KnowledgeGraph import KnowledgeGraph
-from fuzzywuzzy import fuzz
 
 # Object construction
 def construct_vessel(vessel_id: str, events: list, kg: KnowledgeGraph) -> Vessel:
