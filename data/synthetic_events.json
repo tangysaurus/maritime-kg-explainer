@@ -1,0 +1,95 @@
+[
+  {
+    "EncounterID": "Encounter_1",
+    "DayUTC": "2025-06-10",
+    "TimeBlockUTC": "1200-1500Z",
+    "Zone": "EEZ:Philippines",
+    "VesselA": {
+      "Name": "PH_Trawler_302",
+      "Type": "SmallTrawler",
+      "Flag": "PH",
+      "LastPort": "Offshore_Cebu",
+      "RecentBehavior": "LoiteringPrev24h",
+      "WeatherOK": true,
+      "OSINT48h": true
+    },
+    "VesselB": {
+      "Name": "ID_Reefer_417",
+      "Type": "ReeferCarrier",
+      "Flag": "ID",
+      "LastPort": "Cebu_Port",
+      "RecentBehavior": "PortDeparture20hAgo",
+      "WeatherOK": true,
+      "OSINT48h": true
+    },
+    "DerivedMetrics": {
+      "MinSep_nm": 0.8,
+      "Duration_min": 22,
+      "CrossFlag": true
+    },
+    "AttentionRequired": true,
+    "ExplanationTrigger": "Cross-flag trawler-reefer meeting in same EEZ soon after loitering and port departure; corroborated by OSINT and calm seas."
+  },
+  {
+    "EncounterID": "Encounter_2",
+    "DayUTC": "2025-06-11",
+    "TimeBlockUTC": "0300-0600Z",
+    "Zone": "EEZ:Vietnam",
+    "VesselA": {
+      "Name": "VN_Trawler_518",
+      "Type": "SmallTrawler",
+      "Flag": "VN",
+      "LastPort": "CamRanh_Offshore",
+      "RecentBehavior": "LoiteringPrev24h",
+      "WeatherOK": true,
+      "OSINT48h": true
+    },
+    "VesselB": {
+      "Name": "PA_Reefer_901",
+      "Type": "ReeferCarrier",
+      "Flag": "PA",
+      "LastPort": "CamRanh_Port",
+      "RecentBehavior": "PortDeparture18hAgo",
+      "WeatherOK": true,
+      "OSINT48h": true
+    },
+    "DerivedMetrics": {
+      "MinSep_nm": 0.6,
+      "Duration_min": 18,
+      "CrossFlag": true
+    },
+    "AttentionRequired": true,
+    "ExplanationTrigger": "Cross-flag trawler-reefer interaction in Vietnamese EEZ following loitering; OSINT narrative on reefer activity adds confidence."
+  },
+  {
+    "EncounterID": "Encounter_3",
+    "DayUTC": "2025-06-12",
+    "TimeBlockUTC": "0600-0900Z",
+    "Zone": "HighSeas:South China Sea",
+    "VesselA": {
+      "Name": "CN_SquidJigger_221",
+      "Type": "SquidJigger",
+      "Flag": "CN",
+      "LastPort": "FleetAnchorage_HS",
+      "RecentBehavior": "NightFishingPattern",
+      "WeatherOK": true,
+      "OSINT48h": true
+    },
+    "VesselB": {
+      "Name": "PA_Reefer_773",
+      "Type": "ReeferCarrier",
+      "Flag": "PA",
+      "LastPort": "HighSeas_ReeferHold",
+      "RecentBehavior": "ColdStorageSupport",
+      "WeatherOK": true,
+      "OSINT48h": true
+    },
+    "DerivedMetrics": {
+      "MinSep_nm": 0.7,
+      "Duration_min": 26,
+      "CrossFlag": true
+    },
+    "AttentionRequired": true,
+    "ExplanationTrigger": "High-seas cross-flag encounter between fishing and reefer vessels within WCPFC area; long duration, calm conditions, and OSINT-backed pattern repetition."
+  }
+]
